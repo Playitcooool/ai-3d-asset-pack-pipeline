@@ -7,8 +7,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NEW_PACK = ROOT / "ai-3d-asset-pack-pipeline/scripts/new_pack.py"
-VALIDATE_PACK = ROOT / "ai-3d-asset-pack-pipeline/scripts/validate_pack.py"
+NEW_PACK = ROOT / "scripts/new_pack.py"
+VALIDATE_PACK = ROOT / "scripts/validate_pack.py"
 
 
 class PipelineScriptsTest(unittest.TestCase):

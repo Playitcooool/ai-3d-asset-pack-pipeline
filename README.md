@@ -7,15 +7,14 @@ The workflow is designed around GPT Image concepts, [img2threejs](https://github
 ## What this repository contains
 
 ```text
-ai-3d-asset-pack-pipeline/
-├── SKILL.md                         # Codex operating instructions
-├── agents/openai.yaml               # UI metadata and invocation prompt
-├── references/
-│   ├── manifest-schema.md           # Manifest contract and example
-│   └── platforms-and-licensing.md   # Publishing and provenance checklist
-└── scripts/
-    ├── new_pack.py                  # Create a pack workspace
-    └── validate_pack.py             # Validate draft or release readiness
+SKILL.md                         # Codex operating instructions
+agents/openai.yaml               # UI metadata and invocation prompt
+references/
+├── manifest-schema.md            # Manifest contract and example
+└── platforms-and-licensing.md    # Publishing and provenance checklist
+scripts/
+├── new_pack.py                   # Create a pack workspace
+└── validate_pack.py              # Validate draft or release readiness
 ```
 
 ## Install for Codex
@@ -23,8 +22,8 @@ ai-3d-asset-pack-pipeline/
 Clone this repository and place the `ai-3d-asset-pack-pipeline` directory in your Codex skills directory:
 
 ```bash
-git clone https://github.com/Playitcooool/ai-3d-asset-pack-pipeline.git
-cp -R ai-3d-asset-pack-pipeline/ai-3d-asset-pack-pipeline ~/.codex/skills/
+git clone https://github.com/Playitcooool/ai-3d-asset-pack-pipeline.git \
+  ~/.codex/skills/ai-3d-asset-pack-pipeline
 ```
 
 Then invoke it explicitly:
@@ -40,7 +39,7 @@ The skill can also be selected from the Codex skill picker when its metadata is 
 Create a pack workspace:
 
 ```bash
-python3 ai-3d-asset-pack-pipeline/scripts/new_pack.py \
+python3 scripts/new_pack.py \
   "Cozy Potion Shop" --output ./packs
 ```
 
@@ -49,14 +48,14 @@ This creates a draft pack with `src`, `exports`, `demo`, `previews`, `assets`, a
 Validate while developing:
 
 ```bash
-python3 ai-3d-asset-pack-pipeline/scripts/validate_pack.py \
+python3 scripts/validate_pack.py \
   ./packs/cozy-potion-shop
 ```
 
 Validate for public release:
 
 ```bash
-python3 ai-3d-asset-pack-pipeline/scripts/validate_pack.py \
+python3 scripts/validate_pack.py \
   --release ./packs/cozy-potion-shop
 ```
 
@@ -94,15 +93,14 @@ An asset is publishable only when its silhouette, proportions, materials, scale,
 
 ## Limitations and licensing
 
-The included platform guidance is operational, not legal advice. Re-check current marketplace terms and the licenses of all concepts, textures, fonts, code, and dependencies before selling. See [platforms-and-licensing.md](ai-3d-asset-pack-pipeline/references/platforms-and-licensing.md).
+The included platform guidance is operational, not legal advice. Re-check current marketplace terms and the licenses of all concepts, textures, fonts, code, and dependencies before selling. See [platforms-and-licensing.md](references/platforms-and-licensing.md).
 
 ## Development checks
 
 Run the skill validator after editing the package:
 
 ```bash
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py \
-  ai-3d-asset-pack-pipeline
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
 ```
 
 The repository is intentionally small. The skill body contains the operating sequence; references contain details that should be loaded only when the task needs them; scripts enforce repeatable invariants.
