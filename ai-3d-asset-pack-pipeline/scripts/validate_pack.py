@@ -12,7 +12,7 @@ REQUIRED_FILES = ("manifest.json", "installation.md", "usage.md", "license.md")
 VALID_STATUSES = {"draft", "needs_revision", "approved", "rejected"}
 
 
-def validate(root: Path) -> list[str]:
+def validate(root: Path, release: bool = False) -> list[str]:
     errors: list[str] = []
     for name in REQUIRED_FILES:
         if not (root / name).is_file():
@@ -34,6 +34,13 @@ def validate(root: Path) -> list[str]:
     if not isinstance(manifest.get("assets"), list):
         errors.append("manifest assets must be a list")
         return errors
+    if release:
+        if manifest.get("status") != "approved":
+            errors.append("release mode requires pack status: approved")
+        if not manifest["assets"]:
+            errors.append("release mode requires at least one asset")
+        if not manifest.get("provenance"):
+            errors.append("release mode requires at least one provenance record")
 
     ids: set[str] = set()
     for index, asset in enumerate(manifest["assets"]):
@@ -56,14 +63,22 @@ def validate(root: Path) -> list[str]:
             for field in ("preview", "provenance"):
                 if not asset.get(field):
                     errors.append(f"approved asset {asset_id} missing {field}")
+        if release and asset.get("status") == "approved":
+            for field in ("reference", "model_source", "preview", "review", "provenance"):
+                path_value = asset.get(field)
+                if path_value and not (root / path_value).is_file():
+                    errors.append(f"approved asset {asset_id} missing file for {field}: {path_value}")
+        if release and asset.get("status") != "approved":
+            errors.append(f"release mode requires approved asset: {asset_id or index}")
     return errors
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("pack", type=Path)
+    parser.add_argument("--release", action="store_true")
     args = parser.parse_args()
-    errors = validate(args.pack)
+    errors = validate(args.pack, release=args.release)
     if errors:
         print("validation failed:")
         print("\n".join(f"- {error}" for error in errors))

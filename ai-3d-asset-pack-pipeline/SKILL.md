@@ -96,7 +96,7 @@ pack/
   changelog.md
 ```
 
-Use `scripts/new_pack.py` to create a manifest and directory structure. Use `scripts/validate_pack.py` before every release. Do not ship a pack if validation reports missing files, invalid statuses, duplicate IDs, or a missing license/provenance record.
+Use `scripts/new_pack.py` to create a manifest and directory structure. Use `scripts/validate_pack.py` during editing, then add `--release` before every public release. Release mode requires a non-empty approved pack whose assets and provenance records are complete. See [references/manifest-schema.md](references/manifest-schema.md) for the manifest shape.
 
 ### 7. Launch and learn
 
@@ -137,5 +137,6 @@ Build one hard-surface pack of 15 props for a single scene, with five hero asset
 ## Resource routing
 
 - Use [references/platforms-and-licensing.md](references/platforms-and-licensing.md) when deciding where to publish, checking marketplace expectations, or preparing commercial provenance records.
+- Use [references/manifest-schema.md](references/manifest-schema.md) when adding assets or extending the manifest.
 - Run `scripts/new_pack.py` when starting a pack.
 - Run `scripts/validate_pack.py` when reviewing a pack or before creating a release archive.
