@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 3D Asset Pack Pipeline"
+  short_description: "Build and ship coherent AI 3D asset packs"
+  default_prompt: "Use $ai-3d-asset-pack-pipeline to plan, produce, validate, package, and launch a coherent AI-native 3D asset pack."
